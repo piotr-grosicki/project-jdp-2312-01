@@ -24,3 +24,5 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/src/main/resources/notes.txt
+/src/main/java/com/kodilla/ecommercee/basket/

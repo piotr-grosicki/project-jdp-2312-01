@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 @Entity
 public class GenericEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,4 +29,5 @@ public class GenericEntity {
 
         this.value = value;
     }
+
 }
