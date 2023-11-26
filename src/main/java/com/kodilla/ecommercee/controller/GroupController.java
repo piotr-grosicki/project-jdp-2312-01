@@ -1,8 +1,10 @@
 package com.kodilla.ecommercee.controller;
 
+import com.kodilla.ecommercee.service.dto.GroupDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/groups")
