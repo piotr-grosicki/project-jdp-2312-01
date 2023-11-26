@@ -4,6 +4,7 @@ import com.kodilla.ecommercee.service.dto.ProductDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -12,7 +13,7 @@ public class ProductController {
 
     @GetMapping()
     public List<ProductDto> getProducts() {
-        return new ArrayList<>(List.of(
+        return new ArrayList<>(Arrays.asList(
                 new ProductDto(1L, "Dummy Product One"),
                 new ProductDto(2L, "Dummy Product Two"),
                 new ProductDto(3L, "Dummy Product Three")
