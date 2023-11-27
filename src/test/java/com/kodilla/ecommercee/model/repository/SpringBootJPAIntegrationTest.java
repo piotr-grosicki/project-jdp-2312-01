@@ -1,5 +1,7 @@
-package com.kodilla.ecommercee;
+package com.kodilla.ecommercee.model.repository;
 
+import com.kodilla.ecommercee.GenericEntity;
+import com.kodilla.ecommercee.model.repository.GenericEntityRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
