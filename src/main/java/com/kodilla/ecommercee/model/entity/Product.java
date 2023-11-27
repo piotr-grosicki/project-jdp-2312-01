@@ -8,9 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "PRODUCT_ENTITY")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Product {
 
     @Id
@@ -18,4 +15,18 @@ public class Product {
     private long id;
     private String value;
 
+    public Product() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public Product(String value) {
+        this.value = value;
+    }
 }
