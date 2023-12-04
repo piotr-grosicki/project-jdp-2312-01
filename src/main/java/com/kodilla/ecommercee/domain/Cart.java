@@ -23,7 +23,7 @@ public class Cart {
     private Long id;
 
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
