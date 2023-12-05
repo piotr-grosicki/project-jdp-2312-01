@@ -1,26 +1,29 @@
 package com.kodilla.ecommercee.domain;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
-
+import java.util.List;
 @Entity
-@Getter
-@Setter
+@Table(name = "orders")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    private Long id;
+
+    @Column(name = "order_name")
+    private String orderName;
+
+    @Column(name = "product_description")
+    private String productDescription;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<Product> products;
 
     @ManyToOne
-    @JoinColumn(name = "fk_user")
+    @JoinColumn(name = "user_id")
     private User user;
+
 }

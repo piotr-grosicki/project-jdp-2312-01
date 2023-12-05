@@ -1,29 +1,39 @@
 package com.kodilla.ecommercee.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
+
+
+@Entity
+@Table(name = "products")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@Entity(name = "PRODUCT")
+
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", unique = true)
+
     private Long id;
 
+    @NotBlank(message = "Product name cannot be blank")
     @Column(name = "product_name")
     private String productName;
 
-    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-    private List<Cart> carts;
+    @NotNull(message = "Product price cannot be null")
+    @Column(name = "price")
+    private Double price;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
 }
