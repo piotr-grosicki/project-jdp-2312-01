@@ -24,10 +24,6 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
-    @OneToOne
-    @JoinColumn(name = "fk_cart")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
-
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
 }
