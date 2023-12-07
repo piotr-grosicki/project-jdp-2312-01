@@ -13,17 +13,16 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+@Table(name = "products_group")
+public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_name")
-    private String userName;
+    private String productGroupName;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Cart cart;
+    @OneToMany(mappedBy="group")
+    private List<Product> products;
 }
