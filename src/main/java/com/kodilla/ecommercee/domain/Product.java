@@ -4,7 +4,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
+import java.util.List;
 
 
 @Entity
@@ -28,13 +28,12 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    @ManyToMany(mappedBy = "products")
+    private List<Cart> carts;
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "order_id")
-    private Order order;
+    private List<Order> orders;
 
     @ManyToOne
     @JoinColumn(name="fk_product")

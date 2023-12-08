@@ -24,6 +24,9 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user")
     private Cart cart;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 }
