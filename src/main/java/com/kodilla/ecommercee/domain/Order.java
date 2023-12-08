@@ -19,7 +19,7 @@ public class Order {
     @Column(name = "product_description")
     private String productDescription;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "orders")
     private List<Product> products;
 
     @ManyToOne
