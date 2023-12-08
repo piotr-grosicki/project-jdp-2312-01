@@ -31,8 +31,8 @@ public class Product {
     @ManyToMany(mappedBy = "products")
     private List<Cart> carts;
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "order_id")
-    private Order order;
+    private List<Order> orders;
 
 }
