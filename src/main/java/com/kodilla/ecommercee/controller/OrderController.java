@@ -28,19 +28,19 @@ public class OrderController {
         return new ResponseEntity<>(order, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
         OrderDto createdOrder = orderService.createOrder(orderDto);
         return new ResponseEntity<>(createdOrder, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{orderId}")
+    @PutMapping("/{orderId}")
     public ResponseEntity<OrderDto> updateOrder(@PathVariable("orderId") Long orderId, @RequestBody OrderDto orderDto) {
         OrderDto updatedOrder = orderService.updateOrder(orderId, orderDto);
         return new ResponseEntity<>(updatedOrder, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{orderId}")
+    @DeleteMapping("/{orderId}")
     public ResponseEntity<String> deleteOrder(@PathVariable("orderId") Long orderId) {
         orderService.deleteOrder(orderId);
         return ResponseEntity.ok("Order with ID " + orderId + " deleted successfully");
