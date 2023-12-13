@@ -57,9 +57,9 @@ public class ProductTest {
         // When
         product.setProductName("Updated Product");
         productRepository.save(product);
+        Optional<Product> updatedProduct = productRepository.findById(product.getId());
 
         // Then
-        Optional<Product> updatedProduct = productRepository.findById(product.getId());
         Product retrievedProduct = updatedProduct.orElseGet(() -> {
             fail("Product not found");
             return null;
@@ -75,9 +75,9 @@ public class ProductTest {
 
         // When
         productRepository.deleteById(product.getId());
+        Optional<Product> deletedProduct = productRepository.findById(product.getId());
 
         // Then
-        Optional<Product> deletedProduct = productRepository.findById(product.getId());
         assertFalse(deletedProduct.isPresent());
     }
 
@@ -102,9 +102,9 @@ public class ProductTest {
 
         // When
         productRepository.deleteAll();
+        List<Product> remainingProducts = productRepository.findAll();
 
         // Then
-        List<Product> remainingProducts = productRepository.findAll();
         assertEquals(0, remainingProducts.size());
     }
 }

@@ -31,12 +31,13 @@ public class ProductController {
         return new ResponseEntity<>(productService.createProduct(productDto), HttpStatus.CREATED);
     }
 
+
     @PutMapping("/{productId}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto) {
         return new ResponseEntity<>(productService.updateProduct(productDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("productId") Long productId) {
         productService.deleteProduct(productId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
