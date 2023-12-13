@@ -41,11 +41,10 @@ public class UserTest {
         // When
         user.setUserName("UpdatedUser");
         userRepository.save(user);
+        Optional<User> updatedUser = userRepository.findById(user.getId());
 
         // Then
-        Optional<User> updatedUser = userRepository.findById(user.getId());
         User retrievedUser = updatedUser.orElseThrow(() -> new RuntimeException("User not found"));
-
         assertEquals("UpdatedUser", retrievedUser.getUserName());
     }
 
@@ -57,9 +56,9 @@ public class UserTest {
 
         // When
         userRepository.deleteById(user.getId());
+        Optional<User> deletedUser = userRepository.findById(user.getId());
 
         // Then
-        Optional<User> deletedUser = userRepository.findById(user.getId());
         assertFalse(deletedUser.isPresent());
     }
 }
