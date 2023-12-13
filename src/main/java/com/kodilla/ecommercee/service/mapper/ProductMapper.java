@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.service.mapper;
 
+
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.service.dto.ProductDto;
 
@@ -26,4 +27,5 @@ public class ProductMapper {
                 productDto.getGroup()
         );
     }
+  
 }
