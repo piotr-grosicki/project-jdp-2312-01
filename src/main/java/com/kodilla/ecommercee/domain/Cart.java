@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
-@Access(AccessType.FIELD)
 @Getter
 @Setter
 @Entity(name = "CART")
