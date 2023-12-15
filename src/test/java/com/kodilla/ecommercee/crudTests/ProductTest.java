@@ -1,6 +1,8 @@
 package com.kodilla.ecommercee.crudTests;
 
+import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.model.repository.GroupRepository;
 import com.kodilla.ecommercee.model.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class ProductTest {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @Test
     public void testSaveProduct() {
@@ -74,11 +78,15 @@ public class ProductTest {
         productRepository.save(product);
 
         // When
-        productRepository.deleteById(product.getId());
-        Optional<Product> deletedProduct = productRepository.findById(product.getId());
+        Long productId = product.getId();
+        productRepository.deleteById(productId);
+        Optional<Product> deletedProduct = productRepository.findById(productId);
 
         // Then
         assertFalse(deletedProduct.isPresent());
+
+        Optional<Group> deletedProductGroup = groupRepository.findById(productId);
+        assertFalse(deletedProductGroup.isPresent());
     }
 
     @Test

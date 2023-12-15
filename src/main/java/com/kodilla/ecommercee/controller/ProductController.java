@@ -1,5 +1,6 @@
 package com.kodilla.ecommercee.controller;
 
+import com.kodilla.ecommercee.service.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.service.ProductService;
 import com.kodilla.ecommercee.service.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,11 @@ public class ProductController {
 
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable("productId") Long productId) {
-        return new ResponseEntity<>(productService.getProductById(productId), HttpStatus.FOUND);
+        try {
+            return new ResponseEntity<>(productService.getProductById(productId), HttpStatus.FOUND);
+        } catch (ProductNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping()
@@ -31,16 +36,22 @@ public class ProductController {
         return new ResponseEntity<>(productService.createProduct(productDto), HttpStatus.CREATED);
     }
 
-
     @PutMapping("/{productId}")
     public ResponseEntity<ProductDto> updateProduct(@PathVariable("productId") Long productId, @RequestBody ProductDto productDto) {
-        return new ResponseEntity<>(productService.updateProduct(productDto), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(productService.updateProduct(productDto), HttpStatus.OK);
+        } catch (ProductNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("productId") Long productId) {
-        productService.deleteProduct(productId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            productService.deleteProduct(productId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ProductNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-  
 }
