@@ -1,8 +1,16 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.Cart;
+import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.domain.User;
+import com.kodilla.ecommercee.exceptions.CartNotFoundException;
+import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
+import com.kodilla.ecommercee.exceptions.UserNotFoundException;
 import com.kodilla.ecommercee.model.repository.CartRepository;
+import com.kodilla.ecommercee.model.repository.ProductRepository;
+import com.kodilla.ecommercee.model.repository.UserRepository;
 import com.kodilla.ecommercee.service.dto.CartDto;
+import com.kodilla.ecommercee.service.dto.UserDto;
 import com.kodilla.ecommercee.service.mapper.CartMapper;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,32 +23,45 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CartService {
 
+    private final CartMapper cartMapper;
     private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
     public List<CartDto> getAllCarts() {
         return cartRepository.findAll().stream()
-                .map(CartMapper::mapToCartDto)
+                .map(cartMapper::mapToCartDto)
                 .collect(Collectors.toList());
     }
 
     public CartDto getCartById(Long id) {
         Cart existingCart = cartRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no Cart for id: " + id));
+                .orElseThrow(() -> new CartNotFoundException("There is no Cart for id: " + id));
 
-        return CartMapper.mapToCartDto(existingCart);
+        return cartMapper.mapToCartDto(existingCart);
     }
 
-    public CartDto saveCart(CartDto cartDto) {
-        return CartMapper.mapToCartDto(cartRepository.save(CartMapper.mapToCart(cartDto)));
+    public CartDto createCart(CartDto cartDto) {
+        return cartMapper.mapToCartDto(cartRepository.save(cartMapper.mapToCart(cartDto)));
     }
 
     public CartDto updateCart(CartDto cartDto) {
         Cart existingCart = cartRepository.findById(cartDto.getId())
-                .orElseThrow(() -> new RuntimeException("There is no Cart for id: " + cartDto.getId()));
+                .orElseThrow(() -> new CartNotFoundException("There is no Cart for id: " + cartDto.getId()));
 
-        existingCart.setProducts(cartDto.getProducts());
-        existingCart.setUser(cartDto.getUser());
-        return CartMapper.mapToCartDto(cartRepository.save(existingCart));
+        User user = userRepository.findById(cartDto.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User not found for id: " + cartDto.getUserId()));
+        existingCart.setUser(user);
+
+        List<Product> products = cartDto.getProductsId().stream()
+                .map(productId -> productRepository.findById(productId)
+                        .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId)))
+                .collect(Collectors.toList());
+
+        existingCart.setProducts(products);
+
+        Cart updatedCart = cartRepository.save(existingCart);
+        return cartMapper.mapToCartDto(updatedCart);
     }
 
     public void deleteCart(Long id) {
