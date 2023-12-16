@@ -86,10 +86,10 @@ public class UserTest {
         products.add(product1);
 
         User user = new User(null, "TestUser", null, null);
-        user = userRepository.save(user);
+        userRepository.save(user);
 
         Cart cart = new Cart(1L, user, products);
-        cart = cartRepository.save(cart);
+        cartRepository.save(cart);
 
         // When
         cartRepository.deleteById(1L);
