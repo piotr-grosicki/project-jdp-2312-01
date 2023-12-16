@@ -85,14 +85,15 @@ public class UserTest {
         List<Product> products = new ArrayList<>();
         products.add(product1);
 
-        User user = new User(null, "TestUser", null, null);
+        User user = new User();
+        user.setUserName("TestUser");
         userRepository.save(user);
 
         Cart cart = new Cart(1L, user, products);
         cartRepository.save(cart);
 
         // When
-        cartRepository.deleteById(1L);
+        cartRepository.deleteById(cart.getId());
 
         // Then
         assertEquals(1, userRepository.count());
