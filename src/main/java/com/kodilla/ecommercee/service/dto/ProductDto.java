@@ -17,8 +17,9 @@ public class ProductDto {
     private Long id;
     private String productName;
     private Double price;
-    private List<Cart> carts;
-    private List<Order> orders;
-    private Group group;
+    private List<Long> cartIds;
+    private List<Long> orderIds;
+    private Long groupId;
+    private String productGroupName;
   
 }
