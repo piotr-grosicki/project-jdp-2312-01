@@ -6,12 +6,15 @@ import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.service.dto.ProductDto;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class ProductMapper {
 
     public ProductDto mapToProductDto(Product product) {
@@ -21,8 +24,8 @@ public class ProductMapper {
                 product.getPrice(),
                 mapToIds(product.getCarts()),
                 mapToIds(product.getOrders()),
-                product.getGroup().getId(),
-                product.getGroup().getProductGroupName()
+                product.getGroup().getId()
+
         );
     }
 
@@ -31,8 +34,8 @@ public class ProductMapper {
                 productDto.getId(),
                 productDto.getProductName(),
                 productDto.getPrice(),
-                null,
-                null,
+                Collections.emptyList(),
+                Collections.emptyList(),
                 null
         );
 

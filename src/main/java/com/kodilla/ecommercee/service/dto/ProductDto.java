@@ -1,8 +1,6 @@
 package com.kodilla.ecommercee.service.dto;
 
-import com.kodilla.ecommercee.domain.Cart;
-import com.kodilla.ecommercee.domain.Group;
-import com.kodilla.ecommercee.domain.Order;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +18,6 @@ public class ProductDto {
     private List<Long> cartIds;
     private List<Long> orderIds;
     private Long groupId;
-    private String productGroupName;
-  
+
+
 }
