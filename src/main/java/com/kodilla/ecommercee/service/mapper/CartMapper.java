@@ -1,14 +1,24 @@
 package com.kodilla.ecommercee.service.mapper;
+
+
 import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.domain.User;
 import com.kodilla.ecommercee.domain.Cart;
+import com.kodilla.ecommercee.model.repository.UserRepository;
 import com.kodilla.ecommercee.service.dto.CartDto;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Component
+@AllArgsConstructor
 public class CartMapper {
+
+    private final UserRepository userRepository;
+
     public CartDto mapToCartDto(Cart cart) {
         return new CartDto(
                 cart.getId(),
@@ -19,8 +29,8 @@ public class CartMapper {
     public Cart mapToCart(CartDto cartDto) {
         Cart cart = new Cart(
                 cartDto.getId(),
-                null,
-                null
+                userRepository.findById(cartDto.getUserId()).get(),
+                Collections.emptyList()
         );
         User user = new User();
         user.setId(cartDto.getUserId());
