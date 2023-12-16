@@ -89,7 +89,9 @@ public class UserTest {
         user.setUserName("TestUser");
         userRepository.save(user);
 
-        Cart cart = new Cart(1L, user, products);
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cart.setProducts(products);
         cartRepository.save(cart);
 
         // When
