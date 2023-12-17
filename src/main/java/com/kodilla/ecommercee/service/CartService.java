@@ -64,8 +64,12 @@ public class CartService {
         return cartMapper.mapToCartDto(updatedCart);
     }
 
-    public void deleteCart(Long id) {
-        cartRepository.deleteById(id);
+    public void deleteCart(Long id) throws CartNotFoundException {
+        try {
+            cartRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new CartNotFoundException("There is no Cart for id: " + id);
+        }
     }
 
 }
