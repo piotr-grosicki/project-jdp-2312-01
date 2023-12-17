@@ -16,9 +16,6 @@ public class Order {
     @Column(name = "order_name")
     private String orderName;
 
-    @Column(name = "product_description")
-    private String productDescription;
-
     @ManyToMany(mappedBy = "orders")
     private List<Product> products;
 
