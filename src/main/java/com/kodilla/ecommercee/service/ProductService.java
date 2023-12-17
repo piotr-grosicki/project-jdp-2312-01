@@ -2,9 +2,9 @@ package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.Group;
 import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.model.repository.ProductRepository;
 import com.kodilla.ecommercee.service.dto.ProductDto;
-import com.kodilla.ecommercee.service.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.service.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

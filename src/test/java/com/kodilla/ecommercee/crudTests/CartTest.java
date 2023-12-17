@@ -144,6 +144,7 @@ public class CartTest {
 
         // Then
         assertFalse(cartRepository.existsById(cart.getId()));
+        assertTrue(userRepository.existsById(user.getId()));
     }
     @AfterEach
     public void cleanUp() {
