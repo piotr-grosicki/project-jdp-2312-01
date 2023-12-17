@@ -50,7 +50,12 @@ public class ProductService {
         return productMapper.mapToProductDto(productRepository.save(existingProduct));
     }
 
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+    public void deleteProduct(Long id) throws ProductNotFoundException {
+        try {
+            productRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new ProductNotFoundException("There is no Product for id: " + id);
+        }
     }
+
 }

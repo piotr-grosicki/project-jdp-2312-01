@@ -1,8 +1,8 @@
 package com.kodilla.ecommercee.controller;
 
-import com.kodilla.ecommercee.service.exceptions.ProductNotFoundException;
 import com.kodilla.ecommercee.service.ProductService;
 import com.kodilla.ecommercee.service.dto.ProductDto;
+import com.kodilla.ecommercee.service.exceptions.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,10 +46,11 @@ public class ProductController {
     }
 
     @DeleteMapping("{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") Long productId) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") Long productId)
+            throws ProductNotFoundException {
         try {
             productService.deleteProduct(productId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (ProductNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
