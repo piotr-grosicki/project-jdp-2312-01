@@ -56,6 +56,10 @@ public class GroupService {
     }
 
     public void delete(Long id) throws GroupNotFoundException {
+        try {
             groupRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new GroupNotFoundException("There is no Group for id: " + id);
+        }
     }
 }

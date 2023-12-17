@@ -51,7 +51,7 @@ public class GroupController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<GroupDto> deleteGroup(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteGroup(@PathVariable("id") Long id) throws GroupNotFoundException {
         try {
             groupService.delete(id);
             return new ResponseEntity<>(HttpStatus.OK);
