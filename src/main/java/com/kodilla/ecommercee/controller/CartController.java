@@ -56,8 +56,9 @@ public class CartController {
         try {
             cartService.deleteCart(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (CartNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 }

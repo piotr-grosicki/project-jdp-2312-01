@@ -1,25 +1,37 @@
 package com.kodilla.ecommercee.service.mapper;
 
 import com.kodilla.ecommercee.domain.Group;
+import com.kodilla.ecommercee.domain.Product;
 import com.kodilla.ecommercee.service.dto.GroupDto;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.stream.Collectors;
 
+@Component
 public class GroupMapper {
 
-    public static GroupDto mapToGroupDto(Group group) {
+    public GroupDto mapToGroupDto(Group group) {
         return new GroupDto(
                 group.getId(),
                 group.getProductGroupName(),
-                group.getProducts() != null ? new ArrayList<>(group.getProducts()) : null
+                group.getProducts().stream()
+                        .map(Product::getId)
+                        .collect(Collectors.toList())
         );
     }
 
-    public static Group mapToGroup(GroupDto groupDto) {
+    public Group mapToGroup(GroupDto groupDto) {
         return new Group(
                 groupDto.getId(),
                 groupDto.getProductGroupName(),
-                groupDto.getProducts() != null ? new ArrayList<>(groupDto.getProducts()) : null
+                groupDto.getProducts().stream()
+                        .map(productId -> {
+                            Product product = new Product();
+                            product.setId(productId);
+                            return product;
+                        })
+                        .collect(Collectors.toList())
         );
     }
+
 }
