@@ -1,6 +1,8 @@
 package com.kodilla.ecommercee.service;
 
 import com.kodilla.ecommercee.domain.Group;
+import com.kodilla.ecommercee.domain.Product;
+import com.kodilla.ecommercee.exceptions.GroupNotFoundException;
 import com.kodilla.ecommercee.model.repository.GroupRepository;
 import com.kodilla.ecommercee.model.repository.ProductRepository;
 import com.kodilla.ecommercee.service.dto.GroupDto;
@@ -16,38 +18,44 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class GroupService {
 
-    private ProductRepository productRepository;
     private GroupRepository groupRepository;
+    private GroupMapper groupMapper;
 
     public List<GroupDto> getAllGroups() {
         return groupRepository.findAll().stream()
-                .map(GroupMapper::mapToGroupDto)
+                .map(groupMapper::mapToGroupDto)
                 .collect(Collectors.toList());
     }
 
     public GroupDto getGroupById(Long id) {
         Group existingGroup = groupRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("There is no Group for id: " + id));
+                .orElseThrow(() -> new GroupNotFoundException("There is no Group for id: " + id));
 
-        return GroupMapper.mapToGroupDto(existingGroup);
+        return groupMapper.mapToGroupDto(existingGroup);
     }
 
     public GroupDto save(GroupDto groupDto) {
-        return GroupMapper.mapToGroupDto(groupRepository.save(GroupMapper.mapToGroup(groupDto)));
+        return groupMapper.mapToGroupDto(groupRepository.save(groupMapper.mapToGroup(groupDto)));
     }
 
 
     public GroupDto update(GroupDto groupDto) {
         Group existingGroup = groupRepository.findById(groupDto.getId())
-                .orElseThrow(() -> new RuntimeException("There is no Group for id: " + groupDto.getId()));
+                .orElseThrow(() -> new GroupNotFoundException("There is no Group for id: " + groupDto.getId()));
 
         existingGroup.setProductGroupName(groupDto.getProductGroupName());
-        existingGroup.setProducts(groupDto.getProducts());
+        existingGroup.setProducts(groupDto.getProducts().stream()
+                .map(products -> {
+                    Product product = new Product();
+                    product.setId(groupDto.getId());
+                    return product;
+                })
+                .collect(Collectors.toList()));
 
-        return GroupMapper.mapToGroupDto(groupRepository.save(existingGroup));
+        return groupMapper.mapToGroupDto(groupRepository.save(existingGroup));
     }
 
-    public void delete(Long id) {
-        groupRepository.deleteById(id);
+    public void delete(Long id) throws GroupNotFoundException {
+            groupRepository.deleteById(id);
     }
 }
