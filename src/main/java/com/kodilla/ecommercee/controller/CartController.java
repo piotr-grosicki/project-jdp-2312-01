@@ -30,7 +30,7 @@ public class CartController {
     @GetMapping("/{id}")
     public ResponseEntity<CartDto> getCartById(@PathVariable("id") Long id) {
         try {
-            return new ResponseEntity<>(cartService.getCartById(id), HttpStatus.FOUND);
+            return new ResponseEntity<>(cartService.getCartById(id), HttpStatus.OK);
         } catch (CartNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -43,14 +43,12 @@ public class CartController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CartDto> updateCart(@PathVariable("id") Long id, @RequestBody CartDto cartDto) {
-        cartDto.setId(id);
         try {
-            return new ResponseEntity<>(cartService.updateCart(cartDto), HttpStatus.OK);
+            return new ResponseEntity<>(cartService.updateCart(id, cartDto), HttpStatus.OK);
         } catch (CartNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCart(@PathVariable("id") Long id) throws CartNotFoundException{
         try {

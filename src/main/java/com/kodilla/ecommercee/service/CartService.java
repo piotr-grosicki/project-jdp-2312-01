@@ -10,10 +10,8 @@ import com.kodilla.ecommercee.model.repository.CartRepository;
 import com.kodilla.ecommercee.model.repository.ProductRepository;
 import com.kodilla.ecommercee.model.repository.UserRepository;
 import com.kodilla.ecommercee.service.dto.CartDto;
-import com.kodilla.ecommercee.service.dto.UserDto;
 import com.kodilla.ecommercee.service.mapper.CartMapper;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,8 +43,8 @@ public class CartService {
         return cartMapper.mapToCartDto(cartRepository.save(cartMapper.mapToCart(cartDto)));
     }
 
-    public CartDto updateCart(CartDto cartDto) {
-        Cart existingCart = cartRepository.findById(cartDto.getId())
+    public CartDto updateCart(Long id, CartDto cartDto) {
+        Cart existingCart = cartRepository.findById(id)
                 .orElseThrow(() -> new CartNotFoundException("There is no Cart for id: " + cartDto.getId()));
 
         User user = userRepository.findById(cartDto.getUserId())
@@ -64,7 +62,7 @@ public class CartService {
         return cartMapper.mapToCartDto(updatedCart);
     }
 
-    public void deleteCart(Long id) throws CartNotFoundException {
+    public void deleteCart(Long id) {
         try {
             cartRepository.deleteById(id);
         } catch (Exception e) {

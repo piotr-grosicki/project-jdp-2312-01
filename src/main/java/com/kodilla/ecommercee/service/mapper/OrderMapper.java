@@ -2,10 +2,12 @@ package com.kodilla.ecommercee.service.mapper;
 
 import com.kodilla.ecommercee.domain.Order;
 import com.kodilla.ecommercee.service.dto.OrderDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderMapper {
 
-    public static OrderDto mapToOrderDto(Order order) {
+    public OrderDto mapToOrderDto(Order order) {
         OrderDto orderDto = new OrderDto();
         orderDto.setId(order.getId());
         orderDto.setProductName(order.getOrderName());
